@@ -24,11 +24,20 @@ Route.get('/', async ({ view }) => {
   return view.render('index')
 })
 
+/*Route.group(() => {
+
+  Route.resource("/users", "api/UserController").apiOnly()
+  Route.resource("/posts", "api/PostsController").apiOnly()
+  Route.resource("/posts/:postId/comments", "api/CommentsController").apiOnly()
+  Route.resource("/posts/:postId/comments/:commentId/subcomments", "api/SubCommentController").apiOnly()
+  
+}).prefix("/api")*/
+
 Route.group(() => {
 
-  Route.resource("/users", "UserController").apiOnly()
-  Route.resource("/posts", "PostsController").apiOnly()
-  Route.resource("/posts/:postId/comments", "CommentsController").apiOnly()
-  Route.resource("/posts/:postId/comments/:commentId/subcomments", "SubCommentController").apiOnly()
+  Route.resource("/users", "web/UserController").apiOnly()
+  Route.resource("/posts", "web/PostsController").apiOnly()
+  Route.resource("/posts/:postId/comments", "web/CommentsController").apiOnly()
+  Route.resource("/posts/:postId/comments/:commentId/subcomments", "web/SubCommentController").apiOnly()
   
-}).prefix("/api")
+}).prefix("/web")
