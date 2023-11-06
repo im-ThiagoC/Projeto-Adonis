@@ -75,7 +75,6 @@ export default class PostsController {
 
         post.title = body.title
         post.description = body.description
-        post.author = body.author
         
         if(post.image != body.image || !post.image){
             const image = request.file('image', this.validationOptions)

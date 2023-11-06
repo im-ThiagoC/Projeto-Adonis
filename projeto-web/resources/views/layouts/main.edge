@@ -1,0 +1,28 @@
+<html>
+
+<head>
+  <title>The Campfire</title>
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
+</head>
+
+<body>
+  <nav>
+    <div>
+      The Campfire Network
+    </div>
+
+    <div>
+      <button  class="escreva">
+        Compartilhar
+      </button>
+      <button>
+        Cadastrar
+      </button>
+      <a href="{{ route('users.index') }}">Criar</a>
+    </div>
+  </nav>
+
+  @!section('content')
+</body>
+
+</html>

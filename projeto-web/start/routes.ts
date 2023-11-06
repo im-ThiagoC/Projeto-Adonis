@@ -21,11 +21,12 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', async ({ view }) => {
-  return view.render('welcome')
+  return view.render('index')
 })
 
 Route.group(() => {
 
+  Route.resource("/users", "UserController").apiOnly()
   Route.resource("/posts", "PostsController").apiOnly()
   Route.resource("/posts/:postId/comments", "CommentsController").apiOnly()
   Route.resource("/posts/:postId/comments/:commentId/subcomments", "SubCommentController").apiOnly()
