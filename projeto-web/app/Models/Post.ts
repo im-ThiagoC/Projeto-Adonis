@@ -19,8 +19,14 @@ export default class Post extends BaseModel {
   @column ()
   public image: string
 
+  @column ()
+  public authorId: number
+
+  @column()
+  public userId: number
+
   @belongsTo(() => User)
-  public authorId: BelongsTo<typeof User>
+  public user: BelongsTo<typeof User>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -7,9 +7,9 @@
   <form action="{{ route('users.patch', { id: user.id }, { qs: { _method: 'PATCH' }}) }}" method="POST">
     <div>
       <label>
-        Email:
+        Username:
       </label>
-      <input type="email" name="email" placeholder="Email" value="{{ user.email }}" />
+      <input type="username" name="username" placeholder="Username" value="{{ user.username }}" />
     </div>
     <div>
       <label>

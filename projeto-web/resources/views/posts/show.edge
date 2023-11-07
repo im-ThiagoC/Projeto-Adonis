@@ -1,0 +1,22 @@
+@layout('layouts/main')
+
+@section('content')
+  <div>
+    <label>
+      Title
+    </label>
+    <h1>
+      {{ post.title }}
+    </h1>
+    <label>
+        <img src="{{ post.image }}" alt="{{ post.title }}" />
+    </label>
+    <label>
+      Description
+    </label>
+    <li>
+      {{ post.description}}
+    </li>
+    <label>
+  </div>
+@end

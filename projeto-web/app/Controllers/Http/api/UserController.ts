@@ -23,11 +23,13 @@ export default class UsersController {
     public async update({ request, params }: HttpContextContract) {
         const user = await User.findOrFail(params.id)
 
-        const email = request.input('email', undefined)
-        const password = request.input('password', undefined)
+        const email = request.input('email')
+        const username = request.input('username')  
+        const password = request.input('password')
 
         user.email = email ? email : user.email
         user.password = password ? password : user.password
+        user.username = username ? username : user.username
 
         await user.save()
 
@@ -35,16 +37,18 @@ export default class UsersController {
     }
 
     public async store({ request, response }: HttpContextContract) {
-        const email = request.input('email', undefined)
-        const password = request.input('password', undefined)
+        const email = request.input('email')
+        const username = request.input('username')
+        const password = request.input('password')
 
-        if(!email || !password) {
+        if(!email || !password || !username) {
             response.status(400)
             return response
         }
 
         const user = await User.create({
             password,
+            username,
             email,
         })
 

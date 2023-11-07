@@ -1,17 +1,6 @@
 @layout('layouts/main')
 
 @section('content')
-  <h1 class="text-3xl text-red-500">
-    Hello world!dsdsds
-  </h1>
-  <p>
-    Usuários
-  </p>
-
-  <div>
-    <a href="{{ route('users.create') }}">Criar</a>
-  </div>
-
   <table>
     <thead>
       <tr>
@@ -37,7 +26,7 @@
             <a href="{{ route('users.update', { id: user.id }) }}">edit</a>
           </span>
           <span>
-            delete
+            <a href="{{ route('users.destroy', { id: user.id }) }}">delete</a>
           </span>
         </td>
       </tr>

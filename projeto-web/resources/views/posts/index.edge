@@ -1,0 +1,19 @@
+@layout('layouts/main')
+
+@section('content')
+  <h1>Lista de Posts</h1>
+    <ul>
+      @each(post in posts) 
+        <li>
+         <a href="{{ route('posts.show', { id: post.id }) }}">
+            {{ post.title }}
+          </a>
+        </li>
+        <li>
+         <h5>
+            {{ post.description }}
+          </h5>
+        </li>
+      @end
+    </ul>
+@end
