@@ -60,7 +60,7 @@ export default class PostsController {
     public async update ({ params, request, response }: HttpContextContract) {
         const post = await Post.findOrFail(params.id)
 
-        const data = request.only(['title', 'content'])
+        const data = request.only(['title', 'description'])
 
         post.merge(data)
 

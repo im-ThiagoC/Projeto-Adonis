@@ -1,0 +1,23 @@
+@layout('layouts/main')
+
+@section('content')
+
+
+
+<form action="{{ route('auth.login')}}" method="POST">
+
+    <h1>Login</h1>
+
+    <label for="username">
+        Username ou Email
+        <input type="text" name="uid"/>
+    </label>
+
+    <label for="Senha">
+        Senha
+        <input type="password" name="password" id="password"/>
+    </label>
+    
+    <button type = "submit">Logar</button>
+</form>
+@end

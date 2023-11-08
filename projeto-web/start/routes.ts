@@ -67,3 +67,9 @@ Route.group(() => {
     .prefix('/posts')
     .as('posts')
 }).namespace('App/Controllers/Http/Web')
+
+Route.get('register' , 'AuthController.registerShow').as('auth.register.show')
+Route.post('register' , 'AuthController.register').as('auth.register')
+Route.post('login' , 'AuthController.login').as('auth.login')
+Route.get('login' , 'AuthController.loginShow').as('auth.login.show')
+Route.get('logout' , 'AuthController.logout').as('auth.logout')

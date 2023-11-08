@@ -1,0 +1,24 @@
+@layout('layouts/main')
+
+@section('content')
+
+<form action="{{ route('auth.register')}}" method="POST">
+    <label for="username">
+        Username
+        <input type="text" name="username" id="username"/>
+    </label>
+
+    <label for="email">
+        Email
+        <input type="email" name="email" id="email"/>
+    </label>
+
+    <label for="Senha">
+        Senha
+        <input type="password" name="password" id="password"/>
+    </label>
+    
+    <button type = "submit">Registrar</button>
+</form>
+    
+@end
