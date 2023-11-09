@@ -12,21 +12,25 @@
       @each(user in users)
       <tr>
         <td>
-          <a href="{{ route('users.show', { id: user.id }) }}">
+          <a href="{{ route('users.show', { username: user.username }) }}">
             {{ user.username }}
           </a>
         </td>
         <td>
           <span>
-            <a href="{{ route('users.show', { id: user.id }) }}">
-              show
+            <a href="{{ route('users.show', { username: user.username }) }}">
+              exibir
             </a>
           </span>
           <span>
-            <a href="{{ route('users.update', { id: user.id }) }}">edit</a>
+            <a href="{{ route('users.update', { username: user.username }) }}">
+            editar
+            </a>
           </span>
           <span>
-            <a href="{{ route('users.destroy', { id: user.id }) }}">delete</a>
+             <a href="{{ route('users.destroy', { username: user.username }) }}">
+            apagar
+            </a>
           </span>
         </td>
       </tr>

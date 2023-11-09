@@ -8,6 +8,9 @@
          <a href="{{ route('posts.show', { id: post.id }) }}">
             {{ post.title }}
           </a>
+          <p>
+            Por: {{ post.user.username}}
+          </p>
         </li>
         <li>
          <h5>

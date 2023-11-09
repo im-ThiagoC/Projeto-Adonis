@@ -1,8 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Application from '@ioc:Adonis/Core/Application'
 import User from 'App/Models/User'
 import UserService from 'App/Services/UserService'
 import { v4 as uuidv4 } from 'uuid'
+import session from 'Config/session'
 
 export default class UsersController {
   private validationOptions = {
@@ -17,49 +17,54 @@ export default class UsersController {
   }
 
   public async destroy({ view, params }: HttpContextContract) {
-    const user = await User.findOrFail(params.id)
+    const username = params.username
+    const user = await User.findByOrFail('username', username)
     await user.delete()
 
-    return view.render('index')
+    return view.render('auth/register')
   }
 
-  public async update({ request, response, auth}: HttpContextContract) {
-    const user = auth.user!
-    user.username = request.input('username')
+  public async update({ params, view, auth }: HttpContextContract) {
+    const username = params.username
+    const user = await User.findByOrFail('username', username)
 
-    const avatar = request.file('image', this.validationOptions)
-    if (avatar) {
-        const imageName = `${uuidv4()}.${avatar.extname}`
-        await avatar.move(Application.publicPath('profile'), {
-            name: imageName
-        })
-        user.avatar = `profile/${imageName}`
-    }
-    await user?.save()
-    return response.redirect(`/${user.username}`)
-  
+    return view.render('user/update', { user: user})
   }
 
-  /*public async store({ request, response, view }: HttpContextContract) {
+  public async patch({ request, response, params}: HttpContextContract) {
+    const username = params.username
+    const user = await User.findByOrFail('username', username)
+    const name = request.input('name')
     const email = request.input('email')
     const password = request.input('password')
-    const username = request.input('username')
+    const newUsername = request.input('username')
 
-    if (!email || !password || !username) {
-      response.status(400)
-      return response
+    if(user.username != newUsername){
+      const userExists = await User.findBy('username', newUsername)
+      if(userExists){
+        return response.status(400).send('Username já está sendo utilizado')
+        return response
+      }
     }
+    if(user.email != email){
+      const emailExists = await User.findBy('email', email)
+      if(emailExists){
+        return response.status(400).send('Email já está sendo utilizado')
+      }
+    }
+    user.name = name ? name : user.name
+    user.password = password ? password : user.password
 
-    const userService = new UserService()
-    const user = await userService.create(email, username, password)
+    await user.save()
 
-    return view.render('user/show', { user: user })
-  }*/
+    return response.redirect().toRoute('users.show', { username: user.username })
+  }
 
   public async show({ params, view }: HttpContextContract) {
-    const user = await User.findOrFail(params.id)
+    const username = params.username
+    const user = await User.findByOrFail('username', username)
 
-    return view.render('user/show', { user: user })
+    return view.render('user/show', { user: user})
   }
 
   public async registerShow({ view }: HttpContextContract) {
@@ -67,18 +72,19 @@ export default class UsersController {
  }
  
  public async register({ request, response, auth }: HttpContextContract) {
+    const name = request.input('name')
     const email = request.input('email')
     const password = request.input('password')
     const username = request.input('username')
 
 
-    if (!email || !password || !username) {
+    if (!name || !email || !password || !username) {
     response.status(400)
     return response
     }
     
     const userService = new UserService()
-    const user = await userService.create(email, username, password)
+    const user = await userService.create(name, email, username, password)
 
     await auth.login(user)
 

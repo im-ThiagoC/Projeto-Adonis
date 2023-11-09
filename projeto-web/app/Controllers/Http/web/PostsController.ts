@@ -15,14 +15,14 @@ export default class PostsController {
     }
 
     public async index ({ view }: HttpContextContract) {
-        const posts = await Post.all()
+        const posts = await Post.query().preload('user')
 
         return view.render('posts/index', { posts: posts})
     }
 
     public async show({ params, view }: HttpContextContract) {
-        const post = await Post.findOrFail(params.id)
-    
+        const post = await Post.query().where('id', params.id).preload('user').firstOrFail()
+
         return view.render('posts/show', { post: post })
       }
 
@@ -47,7 +47,8 @@ export default class PostsController {
         {
             title: payload.title,
             description: payload.description,
-            image: `uploads/${imageName}`
+            image: `/uploads/${imageName}`,
+            userId: auth.user!.id
         })
 
         post.save()
@@ -58,7 +59,7 @@ export default class PostsController {
 
     public async update ({ params, request, response, auth }: HttpContextContract) {
         const post = await Post.findOrFail(params.id)
-        const author = await User.findOrFail(post.authorId)
+        const author = await User.findOrFail(post.userId)
         const data = request.only(['title', 'description'])
 
         if (author.id !== auth.user?.id) {

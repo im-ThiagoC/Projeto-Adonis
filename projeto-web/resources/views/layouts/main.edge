@@ -30,6 +30,7 @@
       <a href="{{ route('auth.login') }}">Entrar</a>
 
       @if(auth.user)
+        <h1>Olá, {{ auth.user.name }}</h1>
         <a href="{{ route('auth.logout') }}">Sair</a>
       @end
     </div>

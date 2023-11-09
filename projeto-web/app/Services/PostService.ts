@@ -8,12 +8,13 @@ export default class UsersController {
     title: string,
     description: string
     image: string
+    userId: number
   }) {
     const post = new Post()
     post.title = data.title
     post.description = data.description
     post.image = data.image
-    post.authorId = user.id
+    post.userId = user.id
 
     await post.save()
 

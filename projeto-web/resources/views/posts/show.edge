@@ -7,9 +7,9 @@
     </h1>
 
     @if(post.image != null)
-      @if(post.image != '')
+      @if(post.image != '' && post.image != '/uploads/') 
         <div class="image"></div>
-          <img src="{{ `/${post.image}` }}">
+          <img src="{{ post.image }}">
         </div>
       @endif 
     @endif
@@ -26,8 +26,8 @@
       Autor
     </label>
     <li>
-      <a href="{{ route('users.show', { id: post.authorId }) }}">
-      {{ post.user }}
+      <a href="{{ route('users.show', { username: post.user.username }) }}">
+        {{ post.user.username }}
       </a>
     </li>
     <label>
