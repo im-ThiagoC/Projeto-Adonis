@@ -20,10 +20,7 @@ export default class Post extends BaseModel {
   public image: string
 
   @column ()
-  public authorId: number | null
-
-  @column()
-  public userId: number | null
+  public authorId: number
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>

@@ -44,17 +44,6 @@ Route.group(() => {
 */
 
 Route.group(() => {
-  Route.group(() => {
-    Route.get('/', 'UserController.index').as('index')
-    Route.delete('/:id', 'UserController.destroy').as('destroy')
-    Route.get('/new', 'UserController.create').as('create')
-    Route.post('/', 'UserController.store').as('store')
-    Route.get('/:id/update', 'UserController.update').as('update')
-    Route.patch('/:id', 'UserController.patch').as('patch')
-    Route.get('/:id', 'UserController.show').as('show')
-  })
-    .prefix('/users')
-    .as('users')
 
   Route.group(() => {
     Route.get('/', 'PostsController.index').as('index')
@@ -66,10 +55,40 @@ Route.group(() => {
   })
     .prefix('/posts')
     .as('posts')
+
+  Route.group(() => {
+    //Testes pro Postman
+    Route.get('/', 'UserController.index').as('index')
+    Route.delete('/:id', 'UserController.destroy').as('destroy')
+    Route.post('/', 'UserController.store').as('store')
+    Route.get('/:id/update', 'UserController.update').as('update')
+    Route.patch('/:id', 'UserController.patch').as('patch')
+    Route.get('/:id', 'UserController.show').as('show')
+
+    
+
+  })
+    .prefix('/users')
+    .as('users')
+
+  //Autenticacao
+
+  //Registra Usuario
+  Route.get('register' , 'UserController.registerShow').as('auth.register.show')
+  Route.post('register', 'UserController.register').as('auth.register')
+  //Loga Usuario
+  Route.post('login' , 'UserController.login').as('auth.login')
+  Route.get('login' , 'UserController.loginShow').as('auth.login.show')
+  //Desloga Usuario
+  Route.get('logout' , 'UserController.logout').as('auth.logout')
+
+
+
+  /*Route.get('register' , 'AuthController.registerShow').as('auth.register.show')
+  Route.post('register' , 'AuthController.register').as('auth.register')
+  Route.post('login' , 'AuthController.login').as('auth.login')
+  Route.get('login' , 'AuthController.loginShow').as('auth.login.show')
+  Route.get('logout' , 'AuthController.logout').as('auth.logout')*/
+
 }).namespace('App/Controllers/Http/Web')
 
-Route.get('register' , 'AuthController.registerShow').as('auth.register.show')
-Route.post('register' , 'AuthController.register').as('auth.register')
-Route.post('login' , 'AuthController.login').as('auth.login')
-Route.get('login' , 'AuthController.loginShow').as('auth.login.show')
-Route.get('logout' , 'AuthController.logout').as('auth.logout')

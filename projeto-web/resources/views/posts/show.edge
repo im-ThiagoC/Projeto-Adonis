@@ -2,20 +2,33 @@
 
 @section('content')
   <div>
-    <label>
-      Title
-    </label>
     <h1>
       {{ post.title }}
     </h1>
-    <label>
-        <img src="{{ post.image }}" alt="{{ post.title }}" />
-    </label>
+
+    @if(post.image != null)
+      @if(post.image != '')
+        <div class="image"></div>
+          <img src="{{ `/${post.image}` }}">
+        </div>
+      @endif 
+    @endif
+
     <label>
       Description
     </label>
     <li>
       {{ post.description}}
+    </li>
+    <label>
+
+    <label>
+      Autor
+    </label>
+    <li>
+      <a href="{{ route('users.show', { id: post.authorId }) }}">
+      {{ post.user }}
+      </a>
     </li>
     <label>
   </div>

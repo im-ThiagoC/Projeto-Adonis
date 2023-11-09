@@ -23,8 +23,6 @@ export default class PostsController {
     public async show({ params, view }: HttpContextContract) {
         const post = await Post.findOrFail(params.id)
     
-        await post.load('user')
-    
         return view.render('posts/show', { post: post })
       }
 
@@ -32,13 +30,10 @@ export default class PostsController {
         return view.render('posts/create')
     }
 
-    public async store ({ request, response }: HttpContextContract) {
+    public async store ({ request, response, auth }: HttpContextContract) {
         const payload = await request.validate(CreatePostValidator)
-        const user = await User.findOrFail(1)
 
         const image = request.file('image', this.validationOptions)
-
-        const postService = new PostService()
         let imageName = ''
         if (image) {
             imageName = `${uuidv4()}.${image.extname}`
@@ -46,21 +41,30 @@ export default class PostsController {
                 name: imageName
             })
         }
-        const post = await postService.create(user, {
+
+        const postService = new PostService()
+        const post = await postService.create(auth.user!, 
+        {
             title: payload.title,
             description: payload.description,
-            image: imageName
+            image: `uploads/${imageName}`
         })
 
+        post.save()
         response.status(201)
 
         return response.redirect().toRoute('posts.show', { id: post.id })
     }
 
-    public async update ({ params, request, response }: HttpContextContract) {
+    public async update ({ params, request, response, auth }: HttpContextContract) {
         const post = await Post.findOrFail(params.id)
-
+        const author = await User.findOrFail(post.authorId)
         const data = request.only(['title', 'description'])
+
+        if (author.id !== auth.user?.id) {
+            response.status(401)
+            return response
+        }
 
         post.merge(data)
 

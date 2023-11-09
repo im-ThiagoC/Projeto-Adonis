@@ -1,12 +1,19 @@
 <html>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>The Campfire</title>
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Campfire</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
 
+</head>
 <body>
+
   <nav>
+
     <div>
       <a href="{{ route('home.index') }}">The Campfire</a>
     </div>
@@ -21,6 +28,10 @@
       <a href="{{ route('auth.register') }}">Criar uma Conta</a>
 
       <a href="{{ route('auth.login') }}">Entrar</a>
+
+      @if(auth.user)
+        <a href="{{ route('auth.logout') }}">Sair</a>
+      @end
     </div>
   </nav>
 

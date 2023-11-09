@@ -2,9 +2,14 @@
 
 @section('content')
 
-
-
 <form action="{{ route('auth.login')}}" method="POST">
+    @if(flashMessages.has('form'))
+    
+        <div role="alert">
+            {{ flashMessages.get('form') }}
+        </div>
+
+    @endif
 
     <h1>Login</h1>
 
