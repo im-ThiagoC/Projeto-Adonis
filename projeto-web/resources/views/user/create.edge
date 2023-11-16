@@ -1,0 +1,30 @@
+@layout('layouts/main')
+
+@section('content')
+  <p>
+    Criando o Usuário
+  </p>
+  <form action="/users" method="POST">
+    <div>
+      <label>
+        Email:
+      </label>
+      <input type="email" name="email" placeholder="Email" />
+    </div>
+    <div>
+      <label>
+        Username:
+      </label>
+      <input type="text" name="username" placeholder="Username" />
+    </div>
+    <div>
+      <label>
+        Senha:
+      </label>
+      <input type="password" name="password" placeholder="Senha" />
+    </div>
+    <button type="submit">
+      Criar
+    </button>
+  </form>
+@end

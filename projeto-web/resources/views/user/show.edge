@@ -3,6 +3,14 @@
 @section('content')
   <div>
     <label>
+      <div>
+      Foto de Perfil:
+      </div>
+      <img src={{user.avatar}}>
+    </label>
+
+    <br>
+    <label>
       Email:
     </label>
     <li>
@@ -13,12 +21,6 @@
     </label>
     <li>
       {{ user.username }}
-    </li>
-    <label>
-      Password:
-    </label>
-    <li>
-      {{ user.password }}
     </li>
   </div>
 @end

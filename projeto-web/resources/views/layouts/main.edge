@@ -1,7 +1,5 @@
-<html>
-
 <!DOCTYPE html>
-<html lang="en">
+<html class="h-full bg-white" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,33 +8,37 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">
 
 </head>
-<body>
+<body class="h-full">
 
   <nav>
 
-    <div>
+    <div class>
       <a href="{{ route('home.index') }}">The Campfire</a>
     </div>
 
     <div>
       <a href="{{ route('posts.create') }}">Postar</a>
 
-      <a href="{{ route('posts.index') }}">Postagens</a>
+      <a href="{{ route('posts.index') }}">Explore</a>
 
       <a href="{{ route('users.index') }}">Usuários</a>
 
+      @if(!auth.user)
       <a href="{{ route('auth.register') }}">Criar uma Conta</a>
+      @end
 
       <a href="{{ route('auth.login') }}">Entrar</a>
 
+      
       @if(auth.user)
-        <h1>Olá, {{ auth.user.name }}</h1>
-        <a href="{{ route('auth.logout') }}">Sair</a>
+        <div class="">
+          <h1>Olá, {{ auth.user.name }} </h1>
+          <img src="{{ auth.user.avatar }}" height="32" width="32">
+          <a href="{{ route('auth.logout') }}">Sair</a>
+          
+        </div>
       @end
+      
     </div>
   </nav>
-
-  @!section('content')
-</body>
-
-</html>
+@!section('content')

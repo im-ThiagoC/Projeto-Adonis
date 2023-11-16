@@ -60,6 +60,7 @@ Route.group(() => {
     //Testes pro Postman
     Route.get('/', 'UserController.index').as('index')
     Route.delete('/:username', 'UserController.destroy').as('destroy')
+    Route.get('/:username/delete', 'UserController.delete').as('delete')
     Route.post('/', 'UserController.store').as('store')
     Route.get('/:username/update', 'UserController.update').as('update')
     Route.patch('/:username', 'UserController.patch').as('patch')

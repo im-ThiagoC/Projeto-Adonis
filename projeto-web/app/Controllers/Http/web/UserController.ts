@@ -1,7 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import UserService from 'App/Services/UserService'
-import { v4 as uuidv4 } from 'uuid'
 import session from 'Config/session'
 
 export default class UsersController {
@@ -16,15 +15,21 @@ export default class UsersController {
     return view.render('user/index', { users: users })
   }
 
-  public async destroy({ view, params }: HttpContextContract) {
+  public async delete ({ view, params }: HttpContextContract) {
+    const username = params.username
+    const user = await User.findByOrFail('username', username)
+
+    return view.render('user/delete', { user: user})
+  }
+  public async destroy({ params, response }: HttpContextContract) {
     const username = params.username
     const user = await User.findByOrFail('username', username)
     await user.delete()
 
-    return view.render('auth/register')
+    return response.redirect().toRoute('users.index')
   }
 
-  public async update({ params, view, auth }: HttpContextContract) {
+  public async update({ params, view}: HttpContextContract) {
     const username = params.username
     const user = await User.findByOrFail('username', username)
 
@@ -39,12 +44,14 @@ export default class UsersController {
     const password = request.input('password')
     const newUsername = request.input('username')
 
+    
     if(user.username != newUsername){
-      const userExists = await User.findBy('username', newUsername)
+      const userExists = await User.findByOrFail('username', newUsername)
       if(userExists){
         return response.status(400).send('Username já está sendo utilizado')
         return response
       }
+      user.username = newUsername
     }
     if(user.email != email){
       const emailExists = await User.findBy('email', email)
@@ -76,6 +83,7 @@ export default class UsersController {
     const email = request.input('email')
     const password = request.input('password')
     const username = request.input('username')
+    const avatar = '/uploads/user.webp'
 
 
     if (!name || !email || !password || !username) {
@@ -84,7 +92,7 @@ export default class UsersController {
     }
     
     const userService = new UserService()
-    const user = await userService.create(name, email, username, password)
+    const user = await userService.create(name, email, username, password, avatar)
 
     await auth.login(user)
 

@@ -10,6 +10,7 @@
         <p class="mb-0">Clique <a href="/login">aqui</a> para logar.</p>
       </div>
   @end
+  @if(auth.user)
   <div class="container">
     <h1>Crie seu Post!</h1>
 
@@ -32,4 +33,5 @@
       <button type="submit">Criar post</button>
     </form>
   </div>
+  @end
 @endsection

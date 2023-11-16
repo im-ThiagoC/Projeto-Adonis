@@ -19,7 +19,7 @@ export default class CreatePostValidator extends BaseValidator {
         ]),
         image: schema.file.optional({
             size: '4mb',
-            extnames: ['jpg', 'gif', 'png'],
+            extnames: ['jpg', 'gif', 'png', 'webp'],
             }),
       })
     public messages: CustomMessages = {
