@@ -24,25 +24,6 @@ Route.get('/', async ({ view }) => {
   return view.render('index')
 }).as('home.index')
 
-/*Route.group(() => {
-
-  Route.resource("/users", "api/UserController").apiOnly()
-  Route.resource("/posts", "api/PostsController").apiOnly()
-  Route.resource("/posts/:postId/comments", "api/CommentsController").apiOnly()
-  Route.resource("/posts/:postId/comments/:commentId/subcomments", "api/SubCommentController").apiOnly()
-  
-}).prefix("/api")
-
-Route.group(() => {
-
-  Route.resource("/users", "web/UserController").apiOnly()
-  Route.resource("/posts", "web/PostsController").apiOnly()
-  Route.resource("/posts/:postId/comments", "web/CommentsController").apiOnly()
-  Route.resource("/posts/:postId/comments/:commentId/subcomments", "web/SubCommentController").apiOnly()
-  
-}).prefix("/web")
-*/
-
 Route.group(() => {
 
   Route.group(() => {
@@ -65,9 +46,6 @@ Route.group(() => {
     Route.get('/:username/update', 'UserController.update').as('update')
     Route.patch('/:username', 'UserController.patch').as('patch')
     Route.get('/:username', 'UserController.show').as('show')
-
-    
-
   })
     .prefix('/users')
     .as('users')
@@ -82,14 +60,6 @@ Route.group(() => {
   Route.get('login' , 'UserController.loginShow').as('auth.login.show')
   //Desloga Usuario
   Route.get('logout' , 'UserController.logout').as('auth.logout')
-
-
-
-  /*Route.get('register' , 'AuthController.registerShow').as('auth.register.show')
-  Route.post('register' , 'AuthController.register').as('auth.register')
-  Route.post('login' , 'AuthController.login').as('auth.login')
-  Route.get('login' , 'AuthController.loginShow').as('auth.login.show')
-  Route.get('logout' , 'AuthController.logout').as('auth.logout')*/
 
 }).namespace('App/Controllers/Http/Web')
 

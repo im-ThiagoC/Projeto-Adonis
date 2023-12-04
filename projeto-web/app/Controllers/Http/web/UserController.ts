@@ -96,7 +96,7 @@ export default class UsersController {
 
     await auth.login(user)
 
-    return response.redirect().toRoute('home.index')
+    return response.redirect().status(201).toRoute('home.index')
   }
 
   public async login({ request, response, auth, session }: HttpContextContract) {

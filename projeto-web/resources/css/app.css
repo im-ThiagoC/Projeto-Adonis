@@ -12,3 +12,9 @@ html, body {
   position: relative;
 }
 
+a {
+  color: #5a67d8;
+  background-color: transparent;
+  text-decoration: none;
+}	
+

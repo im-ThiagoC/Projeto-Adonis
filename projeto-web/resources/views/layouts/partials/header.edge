@@ -1,0 +1,35 @@
+<header>
+  <nav class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+    <div class="flex justify-center">
+      <a class="self-center text-xl font-semibold text-indigo-900" href="{{ route('home.index') }}">The Campfire</a>
+    </div>
+
+    <div class="flex items-center justify-between p-2 pl-8 pr-8">
+      <a href="{{ route('posts.create') }}">Postar</a>
+
+      <a href="{{ route('posts.index') }}">Explore</a>
+
+      <a href="{{ route('users.index') }}">Usuários</a>
+      
+      @if(!auth.user)
+      <div class="flex justify-between ">
+          <a class="flex text-indigo p-2 pr-4" href="{{ route('auth.login') }}">Entrar</a>
+          <a class="flex text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm p-2 dark:bg-indigo-600
+           dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800" href="{{ route('auth.register') }}">Criar uma Conta</a>
+      </div>
+      @end
+      
+      
+      @if(auth.user)
+        <div class="flex justify-between">
+          <h1>Olá, {{ auth.user.name }} </h1>
+          <img src="{{ auth.user.avatar }}" height="32" width="32">
+          <a href="{{ route('auth.logout') }}">Sair</a>
+          
+        </div>
+      @end
+      
+    </div>
+  </nav>
+</header>
+@!section('content')
