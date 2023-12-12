@@ -21,6 +21,12 @@ cp .env.example .env
 ```console
 npm install
 ```
+4 - Instale o Lucid para testes e inicialize as migrations
+
+```console
+npm install -i @adonisjs/lucid
+node ace migration:run
+```
 
 ## Execução
 
