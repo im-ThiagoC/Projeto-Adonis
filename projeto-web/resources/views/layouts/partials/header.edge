@@ -22,8 +22,8 @@
       
       @if(auth.user)
         <div class="flex justify-between">
-          <h1>Olá, {{ auth.user.name }} </h1>
-          <img src="{{ auth.user.avatar }}" height="32" width="32">
+          <img src="{{ auth.user.avatar }}" class="w-8 h-8 rounded-full mr-2" height="32" width="32">
+          <h1 class="px-2"> Olá, {{ auth.user.name }} </h1>
           <a href="{{ route('auth.logout') }}">Sair</a>
           
         </div>

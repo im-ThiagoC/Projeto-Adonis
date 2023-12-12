@@ -2,11 +2,13 @@
 
 @section('content')
   <div>
-    <h1>
-      <a href="{{ route('users.show', { username: post.user.username }) }}">
+    
+    <div>
+      <img src="{{ post.user.avatar }}" alt="{{ post.user.username }}'s avatar" class="w-16 h-16">
+      <a href="{{ route('users.show', { username: post.user.username }) }}"></a>
         {{ post.user.username }}
       </a>
-    </h1>
+    </div>
     <h1>
       {{ post.title }}
     </h1>

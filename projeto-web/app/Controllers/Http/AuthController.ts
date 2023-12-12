@@ -1,23 +1,28 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import UserService from 'App/Services/UserService'
+import CreateAuthValidator from 'App/Validators/CreateAuthValidator'
+import Application from '@ioc:Adonis/Core/Application'
+import { v4 as uuidv4 } from 'uuid'
 
 export default class AuthController {
-   public async registerShow({ view }: HttpContextContract) {
-      return view.render('auth/register')
-   }
+    public async registerShow({ view }: HttpContextContract) {
+        return view.render('auth/register')
+    }
    
-   public async register({ request, response, auth }: HttpContextContract) {
-        const email = request.input('email')
-        const password = request.input('password')
-        const username = request.input('username')
+    public async register({ request, response, auth, session }: HttpContextContract) {
 
-        const userService = new UserService()
-        const user = await userService.create(email, username, password)
+        const payload = await request.validate(CreateAuthValidator)
 
-        await auth.login(user)
-
-        return response.redirect().toRoute('home.index')
+        try {
+            await auth.use('web').attempt(payload.email, payload.password)
+            return response.redirect().toRoute('home.index')
         }
+        catch (error) {
+            session.flashOnly(['email'])
+            session.flash({ errors: { login: 'Não encontramos nenhuma conta com essas credenciais.' } })
+            return response.redirect().back()
+        }
+        
+    }
 
     public async login({ request, response, auth, session }: HttpContextContract) {
         const {uid, password} = request.only(['uid', 'password'])

@@ -1,40 +1,58 @@
 @layout('layouts/main')
 
 @section('content')
-  <p>
-    Atualize o usuário
-  </p>
-  <form action="{{ route('users.patch', { username: user.username }, { qs: { _method: 'PATCH' }}) }}" method="POST">
+  <h1 class="flex justify-center text-xl font-semibold py-2"> Atualize o usuário </h1>
+  <div class="container mx-auto mt-8">
+    <div class="bg-white p-6 rounded-md shadow-md">
+      <form action="{{ route('users.patch', { username: user.username }, { qs: { _method: 'PATCH' }}) }}" method="POST" class="space-y-4">
+        
+        <div class="flex flex-col p-4 items-center justify-center">
 
-    <div>
-      <label>
-        Nome:
-      </label>
-      <input type="name" name="name" placeholder="Nome" value="{{ user.name }}" />
+                <!-- Profile picture -->
+                <img src="{{user.avatar}}" class="max-w-sm rounded-full shadow-2xl h-60 w-60" />
+
+                <div class="form-control mt-4">
+                    <label class="label">
+                        <span class="label-text font-medium">Foto de perfil</span>
+                    </label>
+                    <input type="file"
+                    id="avatar" name="avatar" accept="image/*"
+                    class="file-input file-input-bordered file-input-secondary file-input-xs w-full max-w-xs" />
+                </div>
+
+            </div>
+
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-600">Nome do Usuário</label>
+          <input type="text" id="name" name="name" class="mt-1 p-2 w-full border rounded-md" placeholder="Thiago" value="{{ user.name }}">
+        </div>
+
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-600">Username</label>
+          <input type="text" id="username" name="username" class="mt-1 p-2 w-full border rounded-md" placeholder="Nedy" value="{{ user.username }}">
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-600">E-mail do Usuário</label>
+          <input type="email" id="email" name="email" class="mt-1 p-2 w-full border rounded-md" placeholder="thiagomedeiros82013@gmail.com" value="{{ user.email }}">
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-600">Senha</label>
+          <input type="password" id="password" name="password" class="mt-1 p-2 w-full border rounded-md" value="12345678">
+        </div>
+
+        <div>
+          <label for="confirm_password" class="block text-sm font-medium text-gray-600">Confirmação de Senha</label>
+          <input type="password" id="confirm_password" name="confirm_password" class="mt-1 p-2 w-full border rounded-md" value="12345678">
+        </div>
+
+        <div>
+          <button type="submit" class="bg-indigo-500 text-white px-4 py-2 my-2 rounded-md">Atualizar Usuário</button>
+        </div>
+
+        
+      </form>
     </div>
-
-    <div>
-      <label>
-        Username:
-      </label>
-      <input type="username" name="username" placeholder="Username" value="{{ user.username }}" />
-    </div>
-
-    <div>
-      <label>
-        Email:
-      </label>
-      <input type="email" name="email" placeholder="Email" value="{{ user.email }}" />
-    </div>
-
-    <div>
-      <label for="image">Foto de Perfil:</label>
-      <input type="file" id="image" name="image">
-    </div>
-
-    
-    <button type="submit">
-      Atualizar
-    </button>
-  </form>
+  </div>
 @end

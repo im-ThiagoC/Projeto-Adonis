@@ -1,7 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import UserService from 'App/Services/UserService'
-import session from 'Config/session'
+import Application from '@ioc:Adonis/Core/Application'
+import { v4 as uuidv4 } from 'uuid'
 
 export default class UsersController {
   private validationOptions = {
@@ -40,27 +41,45 @@ export default class UsersController {
     const username = params.username
     const user = await User.findByOrFail('username', username)
     const name = request.input('name')
-    const email = request.input('email')
-    const password = request.input('password')
     const newUsername = request.input('username')
+    const email = request.input('email', undefined)
+    const password = request.input('password', undefined)
+    const confirm_password = request.input('confirm_password', undefined)
+    const image = request.file('avatar', this.validationOptions)
+
+    if(image){
+      await image.move(Application.tmpPath('uploads'), {
+        name: user.username + '.jpg',
+        overwrite: true,
+      })
+
+     user.avatar = '/uploads/' + user.username + '.jpg'
+    }
+
 
     
-    if(user.username != newUsername){
-      const userExists = await User.findByOrFail('username', newUsername)
+    if(user.username != newUsername && newUsername != null){
+      const userExists = await User.findBy('username', newUsername)
       if(userExists){
         return response.status(400).send('Username já está sendo utilizado')
-        return response
       }
       user.username = newUsername
     }
-    if(user.email != email){
+    if(user.email != email && email != null){
       const emailExists = await User.findBy('email', email)
       if(emailExists){
         return response.status(400).send('Email já está sendo utilizado')
       }
     }
+
+    if(password != confirm_password){
+      return response.status(400).send('Senhas não conferem')
+    }
+
     user.name = name ? name : user.name
     user.password = password ? password : user.password
+    user.email = email ? email : user.email
+    user.username = newUsername ? newUsername : user.username
 
     await user.save()
 
@@ -83,7 +102,7 @@ export default class UsersController {
     const email = request.input('email')
     const password = request.input('password')
     const username = request.input('username')
-    const avatar = '/uploads/user.webp'
+    const avatar = '/uploads/user.png'
 
 
     if (!name || !email || !password || !username) {
@@ -92,7 +111,7 @@ export default class UsersController {
     }
     
     const userService = new UserService()
-    const user = await userService.create(name, email, username, password, avatar)
+    const user = await userService.create(name, email, username, password)
 
     await auth.login(user)
 
